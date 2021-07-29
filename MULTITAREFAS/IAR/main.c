@@ -79,6 +79,8 @@ void tarefa_2(void)
 		TarefaContinua(3);	
 	}
 }
+
+/* Nova tarefa Criada*/
 void tarefa_3(void)
 {
 	volatile uint16_t c = 0;

@@ -5491,7 +5491,7 @@
     "display": "void tarefa_3(void)",
     "location": {
       "column": "6",
-      "line": "82",
+      "line": "84",
       "path": "E:\\Git\\elc1048\\MULTITAREFAS\\IAR\\main.c"
     },
     "name": "tarefa_3",
@@ -5499,13 +5499,13 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1693@F@tarefa_3@c",
+    "ID": "c:main.c@1720@F@tarefa_3@c",
     "What": "Variable",
     "defdec": "Def",
     "display": "c",
     "location": {
       "column": "20",
-      "line": "84",
+      "line": "86",
       "path": "E:\\Git\\elc1048\\MULTITAREFAS\\IAR\\main.c"
     },
     "name": "c",
