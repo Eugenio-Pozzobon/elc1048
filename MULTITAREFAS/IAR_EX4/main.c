@@ -6,12 +6,13 @@
 /*
  * Prototipos das tarefas
  */
+void tarefa_0(void);
 void tarefa_1(void);
 void tarefa_2(void);
 void tarefa_3(void);
 void tarefa_4(void);
-void tarefa_5(void);
-void tarefa_0(void);
+void tarefa_print(void);
+void tarefa_supender(void);
 
 /*
  * Configuracao dos tamanhos das pilhas
@@ -21,7 +22,9 @@ void tarefa_0(void);
 #define TAM_PILHA_2		(TAM_MINIMO_PILHA + 24)
 #define TAM_PILHA_3		(TAM_MINIMO_PILHA + 24)
 #define TAM_PILHA_4		(TAM_MINIMO_PILHA + 24)
-#define TAM_PILHA_5		(TAM_MINIMO_PILHA + 24)
+
+#define TAM_PILHA_PRINT		(TAM_MINIMO_PILHA + 24)
+#define TAM_PILHA_SUSP 	(TAM_MINIMO_PILHA + 24)
 #define TAM_PILHA_OCIOSA	(TAM_MINIMO_PILHA + 24)
 
 /*
@@ -32,7 +35,9 @@ uint32_t PILHA_TAREFA_1[TAM_PILHA_1];
 uint32_t PILHA_TAREFA_2[TAM_PILHA_2];
 uint32_t PILHA_TAREFA_3[TAM_PILHA_3];
 uint32_t PILHA_TAREFA_4[TAM_PILHA_4];
-uint32_t PILHA_TAREFA_5[TAM_PILHA_5];
+
+uint32_t PILHA_TAREFA_PRINT[TAM_PILHA_PRINT];
+uint32_t PILHA_TAREFA_SUSP[TAM_PILHA_SUSP];
 uint32_t PILHA_TAREFA_OCIOSA[TAM_PILHA_OCIOSA];
 
 /*
@@ -44,21 +49,17 @@ int main(void)
 	/* Criacao das tarefas */
 	/* Parametros: ponteiro, nome, ponteiro da pilha, tamanho da pilha, prioridade da tarefa */
 	
-	CriaTarefa(tarefa_0, "Tarefa 0", PILHA_TAREFA_0, TAM_PILHA_0, 1);
-        
-	CriaTarefa(tarefa_1, "Tarefa 1", PILHA_TAREFA_1, TAM_PILHA_1, 2);
-	
-	CriaTarefa(tarefa_2, "Tarefa 2", PILHA_TAREFA_2, TAM_PILHA_2, 3);
-	
-	CriaTarefa(tarefa_3, "Tarefa 3", PILHA_TAREFA_3, TAM_PILHA_3, 4);
-        
-	CriaTarefa(tarefa_4, "Tarefa 4", PILHA_TAREFA_4, TAM_PILHA_4, 5);
-        
-	CriaTarefa(tarefa_5, "Tarefa 5", PILHA_TAREFA_5, TAM_PILHA_5, 6);
-        
+        CriaTarefa(tarefa_print, "Tarefa Print", PILHA_TAREFA_PRINT, TAM_PILHA_PRINT, 1);    
+	CriaTarefa(tarefa_4, "Tarefa 4", PILHA_TAREFA_4, TAM_PILHA_4, 2);
+	CriaTarefa(tarefa_3, "Tarefa 3", PILHA_TAREFA_3, TAM_PILHA_3, 3);
+	CriaTarefa(tarefa_2, "Tarefa 2", PILHA_TAREFA_2, TAM_PILHA_2, 4);
+	CriaTarefa(tarefa_1, "Tarefa 1", PILHA_TAREFA_1, TAM_PILHA_1, 5);
+	CriaTarefa(tarefa_0, "Tarefa 0", PILHA_TAREFA_0, TAM_PILHA_0, 6);
+        CriaTarefa(tarefa_supender, "Tarefa Suspender", PILHA_TAREFA_SUSP, TAM_PILHA_SUSP, 7); 
+                
 	/* Cria tarefa ociosa do sistema */
 	CriaTarefa(tarefa_ociosa,"Tarefa ociosa", PILHA_TAREFA_OCIOSA, TAM_PILHA_OCIOSA, 0);
-	
+	        
 	/* Configura marca de tempo */
 	ConfiguraMarcaTempo();   
 	
@@ -78,15 +79,22 @@ volatile uint16_t c = 0;
 volatile uint16_t d = 0;
 volatile uint16_t e = 0;
 
-/* Tarefas de exemplo que usam funcoes para suspender/continuar as tarefas */
+//tarefa inicial para iniciar o programa supendendo todas as tarefas.
+void tarefa_supender(void){
+        TarefaSuspende(2);
+        TarefaSuspende(3);
+        TarefaSuspende(4);
+        TarefaSuspende(5);
+        TarefaSuspende(6);
+        TarefaSuspende(7);
+}
+
 void tarefa_0(void)
 {
 	for(;;)
 	{
-		a++;		
-                TarefaSuspende(1);
-		TarefaContinua(2);
-	
+		a++;
+                TarefaSuspende(6);
 	}
 }
 
@@ -94,9 +102,9 @@ void tarefa_1(void)
 {
 	for(;;)
 	{
-		b++;		
-                TarefaSuspende(2);
-		TarefaContinua(3);
+		b++;
+                TarefaContinua(6);
+                TarefaSuspende(5);		
 	
 	}
 }
@@ -106,43 +114,44 @@ void tarefa_2(void)
 	for(;;)
 	{
 		c++;
-		TarefaSuspende(3);
-		TarefaContinua(4);	
+                TarefaContinua(5);
+                TarefaSuspende(4);	
 	}
 }
 
-/* Nova tarefa Criada*/
+
 void tarefa_3(void)
 {
 	for(;;)
 	{
 		d++;
-		TarefaSuspende(4);
-		TarefaContinua(5);	
+                TarefaContinua(4);
+                TarefaSuspende(3);
 	}
 }
 
-/* Nova tarefa Criada*/
+
 void tarefa_4(void)
 {
 	for(;;)
-	{
+	{		
 		e++;
-		TarefaSuspende(5);
-		TarefaContinua(6);	
+                TarefaContinua(3);
+                TarefaSuspende(2);
 	}
 }
 
-/* Nova tarefa Criada*/
-void tarefa_5(void)
+//"printa" os valores, por hora apenas recebe em variáveis locais.
+void tarefa_print(void)
 {
 	for(;;)
 	{
-                printf("\n a: %d", a);
-                printf("\n b: %d", b);
-                printf("\n c: %d", c);
-                printf("\n d: %d", d);
-                printf("\n e: %d", e);
-		TarefaSuspende(6);
+                volatile uint16_t _a = a;
+                volatile uint16_t _b = b;
+                volatile uint16_t _c = c;
+                volatile uint16_t _d = d;
+                volatile uint16_t _e = e;
+                TarefaContinua(2);
+		TarefaEspera(30000); //aprox 30s
 	}
 }
